@@ -5,4 +5,4 @@ draft: false
 layout: 'about'
 ---
 
-# Matabit 
+# Meet the Matabit team 
