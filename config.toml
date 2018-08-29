@@ -1,0 +1,37 @@
+## Basic Configuration
+baseurl = "https://example.com/"
+languageCode = "en"
+
+theme = "hyde-hyde"
+
+## Hugo Built-in Features
+# disqusShortname = "your-disqus-shortname"
+# googleAnalytics = "your-google-analytics-id"
+# enableRobotsTXT = true
+
+## Site Settings
+[params]
+    author = "Matabit"
+    title = "Matabit"
+    description = "Blog site for the Matabit CIT480 Senior design team"
+    authorimage = "/img/hugo.png"
+    dateformat = "Jan 2, 2006"
+    highlightjs = true
+    highlightjsstyle = "github"
+    # please choose either GraphComment or Disqus
+
+## Main Menu
+[[menu.main]]
+    name = "Home"
+    weight = 200
+    url = "/"
+[[menu.main]]
+    name = "Posts"
+    weight = 200
+    identifier = "posts"
+    url = "/posts/"
+[[menu.main]]
+    name = "About"
+    identifier = "about"
+    weight = 300
+    url = "/about/"
