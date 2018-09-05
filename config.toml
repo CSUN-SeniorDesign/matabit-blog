@@ -1,5 +1,5 @@
 ## Basic Configuration
-baseurl = "https://example.com/"
+baseurl = "/"
 languageCode = "en"
 
 theme = "hyde-hyde"
@@ -12,7 +12,7 @@ theme = "hyde-hyde"
 ## Site Settings
 [params]
     author = "Matabit"
-    title = "Matabit"
+    title = "Matabit Blog"
     description = "Blog site for the Matabit CIT480 Senior design team"
     authorimage = "/img/hugo.png"
     dateformat = "Jan 2, 2006"
