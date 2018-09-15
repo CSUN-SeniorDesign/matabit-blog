@@ -7,7 +7,7 @@ draft: false
 
 ## H1 Terraform - EC2, Route53  
 
-	For week 3, the first thing I did was research and study up on two tools new to me which were Terrafom and Ansible. These two tools were necessary to know in order to work on project 1. Before I started working with Terraform and Ansible I had to install Ubuntu on my PC and get familiar with it, because I was running Windows which Terrafrom and Ansible do not support. After I installed Ubuntu I had to use Terrafrom in order to setup our EC2 instance, Route 53, and User key instances for the project. I needed to learn Ansible in order to configure our webserver and Anisible playbook. I had also learned and read about resources that Terraform website provided me with in order to build our EC2, Route 53, and Key instances. The last thing I had to learn about was formatting and markdowns for my weekly blog posts. 
+	For week 3, the first thing I did was research and study up on two tools new to me which were Terraform and Ansible. These two tools were necessary to know in order to work on project 1. Before I started working with Terraform and Ansible I had to install Ubuntu on my PC and get familiar with it, because I was running Windows which Terraform and Ansible do not support. After I installed Ubuntu I had to use Terraform in order to setup our EC2 instance, Route 53, and User key instances for the project. I needed to learn Ansible in order to configure our webserver and Ansible playbook. I had also learned and read about resources that Terraform website provided me with in order to build our EC2,Route 53, and Key instances. The last thing I had to learn about was formatting and markdowns for my weekly blog posts. 
 
 ## H2 Installing Ubuntu
 
