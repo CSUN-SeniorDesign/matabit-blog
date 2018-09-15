@@ -64,6 +64,6 @@ One listener was created to listen for traffic on port 80 and forward it on port
 The following issues need to be addressed to complete the ALB setup:
 
 + Ensuring the ALB is set up in the public subnets and availability zones.
-+ Attaching the correct insrances to the target groups so that the ALB is routing traffic to the correct locations.
++ Attaching the correct instances to the target groups so that the ALB is routing traffic to the correct locations.
 + Attach https certificated so that traffic is encrypted accross the network.
 + Make sure ALB can also access private subnet instances.
