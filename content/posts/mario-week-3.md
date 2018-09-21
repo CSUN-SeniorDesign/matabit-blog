@@ -65,5 +65,5 @@ with two more records (not shown) for our other IP's
 
 ## Whats Next?
 
-For next week I will be using Ansible to configure our webserver and Ansible playbooks. Then providing documentation on setting up the EC2 and Route53 using Terraform as well as documentation on configuring the webserver and playbooks using Ansible. Finally, working on 
+For next week I will be using Ansible to configure our webserver and Ansible playbooks. Then providing documentation on setting up the EC2 and Route53 using Terraform as well as documentation on configuring the webserver and playbooks using Ansible. Finally, working on the presentation for the project.  
 
