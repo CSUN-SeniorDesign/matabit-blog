@@ -1,3 +1,9 @@
+---
+title: "Anthony Week 4"
+date: 2018-09-21T19:30:09-07:00
+layout: 'posts'
+draft: false
+---
 # Anthony's 4th week
 
 This week's focus was fixing some issues related the VPC/NAT and helping out with Ansible. A few small changes to the cloud-init file was made too.
