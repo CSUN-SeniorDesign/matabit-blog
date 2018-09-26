@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/CSUN-SeniorDesign/matabit-blog.svg?style=svg)](https://circleci.com/gh/CSUN-SeniorDesign/matabit-blog)
 # matabit-blog
 Matabit blog repo
 
