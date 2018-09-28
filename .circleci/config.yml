@@ -28,7 +28,7 @@ jobs:
             htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html \
             --empty-alt-ignore --disable-external    
 workflows:
-version: 2
+  version: 2
   build_and_test:
     jobs:
       - build
