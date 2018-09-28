@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
-      - run: ls -la public
+      - run: ls -la $HUGO_BUILD_DIR
       - run:
           name: "Test for HTML files"
           command: |
