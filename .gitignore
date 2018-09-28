@@ -1,3 +1,4 @@
 # Default hugo output
 public.zip
 /public
+.DS_Store
