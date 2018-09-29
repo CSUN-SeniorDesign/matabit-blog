@@ -4,11 +4,6 @@ languageCode = "en"
 
 theme = "hyde-hyde"
 
-## Hugo Built-in Features
-# disqusShortname = "your-disqus-shortname"
-# googleAnalytics = "your-google-analytics-id"
-# enableRobotsTXT = true
-
 ## Site Settings
 [params]
     author = "Matabit"
@@ -18,7 +13,6 @@ theme = "hyde-hyde"
     dateformat = "Jan 2, 2006"
     highlightjs = true
     highlightjsstyle = "github"
-    # please choose either GraphComment or Disqus
 
 ## Main Menu
 [[menu.main]]

@@ -26,8 +26,7 @@ jobs:
       - run:
           name: "Test for HTML files"
           command: |
-            htmlproofer $HUGO_BUILD_DIR --allow-hash-href --check-html \
-            --empty-alt-ignore --disable-external    
+            htmlproofer $HUGO_BUILD_DIR    
   deploy-staging:
     docker:
       - image: cibuilds/hugo:latest
