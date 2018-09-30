@@ -34,11 +34,22 @@ jobs:
     environment:
       HUGO_BUILD_DIR: /hugo/public
     steps:
-      - run: apk update && apk add git
+      - run: apk update && apk add git python python-dev py-pip build-base
+            pip install awscli
       - checkout
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
+      - deploy:
+          name: deploy to AWS
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
+              aws s3 sync $HUGO_BUILD_DIR \
+              s3://matabit-circleci.s3.amazonaws.com/ 
+            else
+              echo "Not master branch, dry run only"
+            fi
 
   deploy-production:
     docker:
@@ -61,5 +72,7 @@ workflows:
       - test:
           requires:
           - build
-      - deploy-staging
-      - deploy-production
+      - deploy-staging:
+          requires:
+            - test 
+      # - deploy-production
