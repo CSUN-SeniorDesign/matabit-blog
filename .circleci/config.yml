@@ -48,7 +48,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" = "circle-ci" ]; then
               tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
-              aws s3 sync $HUGO_BUILD_DIR \
+              aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
               s3://matabit-circleci/blog
             else
               echo "Not master branch, dry run only"
