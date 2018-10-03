@@ -47,7 +47,7 @@ jobs:
           name: deploy to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" = "circle-ci" ]; then
-              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
+              tar -zcf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
               aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
               $STAGING_BUCKET
             else
@@ -73,7 +73,7 @@ jobs:
           name: deploy to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" = "circle-ci" ]; then
-              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
+              tar -zcf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
               aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
               $STAGING_MASTER
             else
