@@ -91,7 +91,10 @@ workflows:
       - deploy-staging:
           requires:
             - test 
-      - deploy-production:
+      - hold-production:
           type: approval
           requires:
             - test
+      - deploy-master:
+          requires:
+            - hold-production
