@@ -47,9 +47,9 @@ jobs:
           name: deploy to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" = "circle-ci" ]; then
-              tar -zcf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
+              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
               aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
-              $STAGING_BUCKET/${CIRCLE_SHA1}.tar.gz
+              $STAGING_BUCKET${CIRCLE_SHA1}.tar.gz
             else
               echo "Not master branch, dry run only"
             fi
@@ -73,9 +73,9 @@ jobs:
           name: deploy to AWS
           command: |
             if [ "${CIRCLE_BRANCH}" = "circle-ci" ]; then
-              tar -zcf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
+              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
               aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
-              $MASTER_BUCKET/${CIRCLE_SHA1}.tar.gz
+              $MASTER_BUCKET${CIRCLE_SHA1}.tar.gz
             else
               echo "Not master branch, dry run only"
             fi
