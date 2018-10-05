@@ -83,4 +83,4 @@ workflows:
             - build-test
       - deploy-master:
           requires:
-            - hold-production
+            - hold-master
