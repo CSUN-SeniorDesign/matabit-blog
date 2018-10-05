@@ -6,10 +6,10 @@ draft: false
 ---
 
 # Week 6
-For week 6 I was repsonsible for finishing up the ASG as well as preparing the documentation, creating the service diagram, and getting everything ready for the presentation.
+For week 6 I was responsible for finishing up the ASG as well as preparing the documentation, creating the service diagram, and getting everything ready for the presentation.
 
 ## ASG
-In order to finish up with the ASG, I had to create the configuration to determine what type of EC2 instances it would create. To do this, I created an aws_launch_configuration resource at the top of my asg file and referenced it from my aws_autoscaling_group resource. 
+In order to finish up with the ASG, I had to create the configuration to determine what type of EC2 instances it would create. To do this, I created an aws_launch_configuration resource at the top of my ASG file and referenced it from my aws_autoscaling_group resource. 
 
 ```
 resource "aws_launch_configuration" "asg_conf" {
@@ -26,9 +26,9 @@ resource "aws_launch_configuration" "asg_conf" {
 }
 ```
 
-The image id references the AMI ID that Shahed created with Packer. Instance type was set to t2.micro and we attched a security group to limit incoming traffic to our instances. User data is included to specify our group member rsa keys and the iam instance profile will associate the ec2-get-iam role with our launched instances. 
+The image id references the AMI ID that Shahed created with Packer. Instance type was set to t2.micro and we attached a security group to limit incoming traffic to our instances. User data is included to specify our group member rsa keys and the iam instance profile will associate the ec2-get-iam role with our launched instances. 
 
-The following lines of terraform code were used to define how our ASg should work.
+The following lines of terraform code were used to define how our ASG should work.
 
 ```
 resource "aws_autoscaling_group" "asg" {
