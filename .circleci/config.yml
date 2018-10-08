@@ -18,7 +18,7 @@ jobs:
             htmlproofer $HUGO_BUILD_DIR    
   deploy-staging:
     docker:
-      - image: cibuilds/hugo:latest
+      - image: ssalehian/circleci-aws-docker:latest
     working_directory: /hugo
     environment:
       HUGO_BUILD_DIR: /hugo/public
@@ -44,7 +44,7 @@ jobs:
             fi
   deploy-master:
     docker:
-      - image: cibuilds/hugo:latest
+      - image: ssalehian/circleci-aws-docker:latest
     working_directory: /hugo
     environment:
       HUGO_BUILD_DIR: /hugo/public
