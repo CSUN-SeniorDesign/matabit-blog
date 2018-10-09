@@ -25,11 +25,17 @@ jobs:
       BUILD_ENV: staging
     steps:
       - checkout
+      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
-            
-
+      - deploy:
+          name: Create Docker Image and push to ECR
+          command: |
+            $(aws ecr get-login --no-include-email --region us-west-2)
+            docker build -t matabit-blog --build-arg BUILD_VAR=$BUILD_ENV .
+            docker tag matabit-blog:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
+            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
   deploy-master:
     docker:
       - image: ssalehian/circleci-aws-docker:latest
@@ -39,10 +45,17 @@ jobs:
       BUILD_ENV: prod
     steps:
       - checkout
+      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
-
+      - deploy:
+          name: Create Docker Image and push to ECR
+          command: |
+            $(aws ecr get-login --no-include-email --region us-west-2)
+            docker build -t matabit-blog --build-arg BUILD_VAR=$BUILD_ENV .
+            docker tag matabit-blog:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
+            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
 
 workflows:
   version: 2

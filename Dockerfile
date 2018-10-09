@@ -11,6 +11,7 @@ RUN mkdir -p "/var/www/staging/matabit-blog/public" \
     && cp /usr/share/nginx/html/index.html \
         /var/www/staging/matabit-blog/public
 
+# Copy content of public folder to docker image
 COPY /hugo/public/* /var/www/$BUILD_VAR/matabit-blog/public/
 
 # add custom nginx config
