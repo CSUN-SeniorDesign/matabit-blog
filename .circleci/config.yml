@@ -37,6 +37,8 @@ jobs:
             docker build -t matabit-blog --build-arg BUILD_VAR=$BUILD_ENV .
             docker tag matabit-blog:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
             docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
+            touch ${CIRCLE_SHA1}.txt
+            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET${CIRCLE_SHA1}.txt
   deploy-master:
     docker:
       - image: ssalehian/circleci-aws-docker:latest
@@ -58,11 +60,14 @@ jobs:
             docker build -t matabit-blog --build-arg BUILD_VAR=$BUILD_ENV .
             docker tag matabit-blog:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
             docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
+            touch ${CIRCLE_SHA1}.txt
+            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET${CIRCLE_SHA1}.txt
+            
 
 workflows:
   version: 2
-  build_test_deploy:
-    jobs:
+  build_test_deploy:  
+    jobs: 
       - build-test
       - deploy-staging:
           requires:
