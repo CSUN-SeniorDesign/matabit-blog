@@ -16,5 +16,5 @@ COPY /hugo/public/* /var/www/$BUILD_VAR/matabit-blog/public/
 # add custom nginx config
 COPY nginx.template /etc/nginx/conf.d/default.conf
 
-# expose port 80 and 443 for http/https
+# expose port 80 for HTTP
 EXPOSE 80
