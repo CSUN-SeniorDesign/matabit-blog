@@ -25,6 +25,7 @@ jobs:
       BUILD_ENV: staging
     steps:
       - checkout
+      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
@@ -45,6 +46,7 @@ jobs:
       BUILD_ENV: prod
     steps:
       - checkout
+      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
