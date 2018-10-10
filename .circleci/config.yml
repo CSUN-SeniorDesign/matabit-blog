@@ -35,8 +35,8 @@ jobs:
           command: |
             $(aws ecr get-login --no-include-email --region us-west-2)
             docker build -t matabit-blog-staging --build-arg BUILD_VAR=$BUILD_ENV .
-            docker tag matabit-blog-staging:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog-staging:latest
-            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog-staging:latest
+            docker tag matabit-blog-staging:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
+            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-blog:latest
             touch ${CIRCLE_SHA1}.txt
             aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET${CIRCLE_SHA1}.txt
   deploy-master:
