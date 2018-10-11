@@ -60,7 +60,7 @@ jobs:
             docker build -t matabit-blog-prod --build-arg BUILD_VAR=$BUILD_ENV .
             docker tag matabit-blog-prod:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
             docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
-            touch ${CIRCLE_SHA1}.txtw
+            touch ${CIRCLE_SHA1}.txt
             aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_PROD${CIRCLE_SHA1}.txt
 
 workflows:
