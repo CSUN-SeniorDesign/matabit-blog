@@ -38,7 +38,7 @@ jobs:
             docker tag matabit-blog-staging:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:staging
             docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:staging
             touch ${CIRCLE_SHA1}.txt
-            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET${CIRCLE_SHA1}.txt
+            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_STAGING${CIRCLE_SHA1}.txt
   deploy-master:
     docker:
       - image: ssalehian/circleci-aws-docker:latest
@@ -61,7 +61,7 @@ jobs:
             docker tag matabit-blog-prod:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
             docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
             touch ${CIRCLE_SHA1}.txtw
-            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET${CIRCLE_SHA1}.txt
+            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_PROD${CIRCLE_SHA1}.txt
 
 workflows:
   version: 2
