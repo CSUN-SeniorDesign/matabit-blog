@@ -21,4 +21,4 @@ draft: false
 ---
 ```
 
-After you've made your post run ``hugo`` in the root directory to generate the page
+After you've made your post run ``hugo`` in the root directory to generate the page.
