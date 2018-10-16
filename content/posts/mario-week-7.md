@@ -1,5 +1,5 @@
 ---
-title: "Posts"
+title: "Mario Week 7"
 date: 2018-10-11T21:11:43-07:00
 layout: 'posts'
 draft: false
