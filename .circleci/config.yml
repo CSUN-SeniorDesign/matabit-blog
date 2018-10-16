@@ -18,61 +18,55 @@ jobs:
             htmlproofer $HUGO_BUILD_DIR    
   deploy-staging:
     docker:
-      - image: cibuilds/hugo:latest
+      - image: ssalehian/circleci-aws-docker:latest
     working_directory: /hugo
     environment:
       HUGO_BUILD_DIR: /hugo/public
+      BUILD_ENV: staging
     steps:
-      - run: 
-          name: Install aws cli and dependencies
-          command : |
-            apk update && apk add git python python-dev py-pip build-base
-            pip install awscli
       - checkout
+      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
+      - run: ls -la /hugo
       - deploy:
-          name: deploy to AWS
+          name: Create Docker Image and push to ECR
           command: |
-            if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
-              aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
-              $STAGING_BUCKET${CIRCLE_SHA1}.tar.gz
-            else
-              echo "Not master branch, dry run only"
-            fi
+            $(aws ecr get-login --no-include-email --region us-west-2)
+            docker build -t matabit-blog-staging --build-arg BUILD_VAR=$BUILD_ENV .
+            docker tag matabit-blog-staging:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:staging
+            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:staging
+            touch ${CIRCLE_SHA1}.txt
+            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_STAGING${CIRCLE_SHA1}.txt
   deploy-master:
     docker:
-      - image: cibuilds/hugo:latest
+      - image: ssalehian/circleci-aws-docker:latest
     working_directory: /hugo
     environment:
       HUGO_BUILD_DIR: /hugo/public
+      BUILD_ENV: prod
     steps:
-      - run: 
-          name: Install aws cli and dependencies
-          command : |
-            apk update && apk add git python python-dev py-pip build-base
-            pip install awscli
       - checkout
+      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
+      - run: ls -la /hugo
       - deploy:
-          name: deploy to AWS
+          name: Create Docker Image and push to ECR
           command: |
-            if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              tar -zcvf /hugo/${CIRCLE_SHA1}.tar.gz -C $HUGO_BUILD_DIR .
-              aws s3 cp /hugo/${CIRCLE_SHA1}.tar.gz \
-              $MASTER_BUCKET${CIRCLE_SHA1}.tar.gz
-            else
-              echo "Not master branch, dry run only"
-            fi
+            $(aws ecr get-login --no-include-email --region us-west-2)
+            docker build -t matabit-blog-prod --build-arg BUILD_VAR=$BUILD_ENV .
+            docker tag matabit-blog-prod:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
+            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
+            touch ${CIRCLE_SHA1}.txt
+            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_PROD${CIRCLE_SHA1}.txt
 
 workflows:
   version: 2
-  build_test_deploy:
-    jobs:
+  build_test_deploy:  
+    jobs: 
       - build-test
       - deploy-staging:
           requires:
