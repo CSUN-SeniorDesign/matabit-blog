@@ -15,7 +15,7 @@ AWS Fargate allows us to run our containers without having to think about any of
 
 # Our problem...
 
-When using ECS, it would create its own services which have their own respective target groups. These target groups would not register the containers correctly. So in the ALB listener we would manually add rules for the correct services, but due to conflicts with the default route it would only route the rule with the highest priority.
+When using ECS, it would create its own services which have their own respective target groups. The target group that we were creating initially would not register the containers correctly. So in the ALB listener we would manually add rules for the correct services, but due to conflicts with the default route it would only route the rule with the highest priority.
 
 So when we finally transferred everything over to terraform instead of going through the management console, we managed to correctly identify the target groups and associate them with the correct services and listeners.
 
@@ -127,6 +127,10 @@ resource "aws_lb_listener_rule" "matabit-staging" {
 }
 ```
 
+## HTTPS doesn't work...
+SSL wouldn't work for the routes at `*.staging.matabit.org`.
+Oddly enough, the same certificate worked for Project 2, which was dealing with EC2 instances,
+however, the ALB had trouble veryfing the certifcate for containers. So we updated the certificate and added `*.staging.matabit.org` as a SAN. Afterwards, HTTPS traffic was allowed for all routes.
 
 # Making the Containers Private
 
@@ -159,7 +163,7 @@ resource "aws_nat_gateway" "gateway" {
   depends_on = ["aws_route_table.public-rt"]
 }
 
-# Private Route Table with NAT Gateway
+# Private Route Table with NAT Gatewaye
 resource "aws_route_table" "private-rt" {
   vpc_id = "${aws_vpc.default.id}"
 
@@ -175,5 +179,4 @@ resource "aws_route_table" "private-rt" {
   depends_on = ["aws_route_table.public-rt"]
 }
 ```
-
 
