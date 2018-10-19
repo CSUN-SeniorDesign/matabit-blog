@@ -49,7 +49,7 @@ You define data you want hard coded here. Its a good practice to bring in variab
 This allows a btt of modularity. 
 
 ## The Resource blocks
-The resource block file contains all the AWS resources that will be used. I referenced the variables from the `variables.tf` file for a few of the resources. The entire file is around 257 lines of code so I won't be showing all of the code. If you would like to view the Terraform file visit the [Github link](https://github.com/CSUN-SeniorDesign/matabit-infrastructure/blob/master/Terraform/VPC/VPC.tf). With the help of Shahed, we were able to implement a remote state in an S3 bucket so we all can access variables from our separate terraform directory. I'll explain this later. The main part of this task was to recreate our previous infrastructure but add a NAT/Bastion host. Sample code below: 
+The resource block file contains all the AWS resources that will be used. I referenced the variables from the `variables.tf` file for a few of the resources. The entire file is around 257 lines of code so I won't be showing all of the code. If you would like to view the Terraform file visit the [Github link](https://github.com/CSUN-SeniorDesign/matabit-infrastructure). With the help of Shahed, we were able to implement a remote state in an S3 bucket so we all can access variables from our separate terraform directory. I'll explain this later. The main part of this task was to recreate our previous infrastructure but add a NAT/Bastion host. Sample code below: 
 
 ``` Terraform
 terraform {
@@ -79,7 +79,7 @@ resource "aws_vpc" "default" {
 ```
 
 ## Bastion/SSH
-Creating the Bastion/NAT instance was quite a journey. It had Shahed and I scratching our heads around every corner. One issue we had we our cloud-init file. It simply wouldn't run however a small syntax error was the root of the problem. After it was configured, we were able to SSH into our bastion but not the private EC2 instances. Turns out we had to add the NAT as one of the incoming security groups and allow ssh forwarding which you can [read about here](https://github.com/CSUN-SeniorDesign/matabit-infrastructure/blob/master/docs/aws_docs/aws-ssh-bastion-forwarding.md). 
+Creating the Bastion/NAT instance was quite a journey. It had Shahed and I scratching our heads around every corner. One issue we had we our cloud-init file. It simply wouldn't run however a small syntax error was the root of the problem. After it was configured, we were able to SSH into our bastion but not the private EC2 instances. Turns out we had to add the NAT as one of the incoming security groups and allow ssh forwarding which you can [read about here](https://github.com/CSUN-SeniorDesign/matabit-infrastructure/). 
 
 ## Creating outputs
 After the VPC was created we had to share the variables of the resource blocks to other Terraform files. To do this we had to create an `outputs.tf` file to define the variables we wanted to share. This allows other Terraform files to reference things such as VPC IDs and IP's addresses without hard coding them after the VPC script is ran. It makes our infrastructure more dynamic. A sample of the output looks like: 
