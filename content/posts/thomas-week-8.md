@@ -5,7 +5,7 @@ layout: 'posts'
 draft: false
 ---
 
-# Week 7
+# Week 8
 My main task for this week was finishing up the Terraform file for our ECS and preparing for the presentation we would be giving for the project. With the help of my teammates we were able to finish the ECS to host our staging and production environments.
 
 ## ECS creation
