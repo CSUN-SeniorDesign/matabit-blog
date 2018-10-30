@@ -16,61 +16,38 @@ jobs:
           name: "Test for HTML files"
           command: |
             htmlproofer $HUGO_BUILD_DIR    
-  deploy-staging:
-    docker:
-      - image: ssalehian/circleci-aws-docker:latest
-    working_directory: /hugo
-    environment:
-      HUGO_BUILD_DIR: /hugo/public
-      BUILD_ENV: staging
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: git submodule sync && git submodule update --init
-      - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
-      - run: ls -la $HUGO_BUILD_DIR
-      - run: ls -la /hugo
-      - deploy:
-          name: Create Docker Image and push to ECR
-          command: |
-            $(aws ecr get-login --no-include-email --region us-west-2)
-            docker build -t matabit-blog-staging --build-arg BUILD_VAR=$BUILD_ENV .
-            docker tag matabit-blog-staging:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:staging
-            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:staging
-            touch ${CIRCLE_SHA1}.txt
-            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_STAGING${CIRCLE_SHA1}.txt
   deploy-master:
     docker:
-      - image: ssalehian/circleci-aws-docker:latest
+      - image: cibuilds/hugo:latest
     working_directory: /hugo
     environment:
       HUGO_BUILD_DIR: /hugo/public
-      BUILD_ENV: prod
     steps:
+      - run: 
+          name: Install aws cli and dependencies
+          command : |
+            apk update && apk add git python python-dev py-pip build-base
+            pip install awscli
       - checkout
-      - setup_remote_docker
       - run: git submodule sync && git submodule update --init
       - run: HUGO_ENV=production hugo -v -d $HUGO_BUILD_DIR
       - run: ls -la $HUGO_BUILD_DIR
-      - run: ls -la /hugo
       - deploy:
-          name: Create Docker Image and push to ECR
+          name: deploy to AWS
           command: |
-            $(aws ecr get-login --no-include-email --region us-west-2)
-            docker build -t matabit-blog-prod --build-arg BUILD_VAR=$BUILD_ENV .
-            docker tag matabit-blog-prod:latest 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
-            docker push 485876055632.dkr.ecr.us-west-2.amazonaws.com/matabit-ecr:prod
-            touch ${CIRCLE_SHA1}.txt
-            aws s3 cp ${CIRCLE_SHA1}.txt $DOCKER_BUCKET_PROD${CIRCLE_SHA1}.txt
+            if [ "${CIRCLE_BRANCH}" = "anthony-circle" ]; then
+              aws s3 sync $HUGO_BUILD_DIR \
+              s3://matabit-circleci/blog --delete
+            else
+              echo "Not anthony-circle branch, dry run only"
+            fi
+            
 
 workflows:
   version: 2
   build_test_deploy:  
     jobs: 
       - build-test
-      - deploy-staging:
-          requires:
-            - build-test 
       - hold-master:
           type: approval
           requires:
