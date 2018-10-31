@@ -37,7 +37,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" = "anthony-circle" ]; then
               aws s3 sync $HUGO_BUILD_DIR \
-              s3://matabit-circleci/blog --delete
+              s3://matabit.org --delete
             else
               echo "Not anthony-circle branch, dry run only"
             fi
