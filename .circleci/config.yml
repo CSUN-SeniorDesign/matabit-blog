@@ -39,7 +39,7 @@ jobs:
               aws s3 sync $HUGO_BUILD_DIR \
               s3://matabit.org --delete
             else
-              echo "Not anthony-circle branch, dry run only"
+              echo "Not master branch, dry run only"
             fi
             
 
@@ -48,10 +48,6 @@ workflows:
   build_test_deploy:  
     jobs: 
       - build-test
-      - hold-master:
-          type: approval
-          requires:
-            - build-test
       - deploy-master:
           requires:
-            - hold-master
+            - build-test
